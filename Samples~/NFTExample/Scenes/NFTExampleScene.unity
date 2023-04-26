@@ -2521,10 +2521,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cc4617e352a7c4f89806e0ca0b54ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mintTransaction: {fileID: 2811297602134710623, guid: 1b4b59f10ca2411486cf46143b611ca9, type: 3}
-  listScript: {fileID: 2811297602134710623, guid: ba4a8a20241343ec828b3cd3617e7e4c, type: 3}
-  NFTContract: {fileID: 2811297602134710623, guid: bedb4cb06dc240cfaac83d507d7c1912, type: 3}
-  SDKExampleNFTContract: {fileID: 2811297602134710623, guid: 56db0ac867f5ed14a998bc2d128e6d4e, type: 3}
+  mintTransaction: {fileID: 3232733424486734734, guid: 1b4b59f10ca2411486cf46143b611ca9, type: 3}
+  listScript: {fileID: 3232733424486734734, guid: ba4a8a20241343ec828b3cd3617e7e4c, type: 3}
+  SDKExampleNFTContract: {fileID: 3232733424486734734, guid: 56db0ac867f5ed14a998bc2d128e6d4e, type: 3}
+  NonFungibleTokenContract: {fileID: 3232733424486734734, guid: cce7a70edbdf490998a0dbec1a75c0f5, type: 3}
   NFTContentPanel: {fileID: 1824546919}
   NFTPrefab: {fileID: 4370079491878580153, guid: e150cc3b1c3029d4dae1db94b3092fa0, type: 3}
   accountText: {fileID: 601373371}

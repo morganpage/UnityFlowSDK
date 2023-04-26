@@ -2,30 +2,58 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
+using DapperLabs.Flow.Sdk;
 using UnityEngine;
+using DapperLabs.Flow.Sdk.Unity;
+
 
 namespace FlowWordsTutorial
 {
     public class FlowInterface : MonoBehaviour
     {
-        // FLOW account object - set via Login screen.
-        [Header("FLOW Account")]
+        /// <summary>
+        /// Class to hold the payload of a cadence CurrentState event
+        /// </summary>
+        public class StatePayload
+        {
+            public List<GuessResult> currentState;
+        }
 
+        /// <summary>
+        /// Class to hold the payload of a cadence LastGameStart event
+        /// </summary>
+        public class TimePayload
+        {
+            public Decimal startTime;
+        }
+
+        /// <summary>
+        /// Class to hold the payload of a cadence GuessResult event
+        /// </summary>
+        public class GuessResultPayload
+        {
+            public string result;
+        }
+        
         // The TextAssets containing Cadence scripts and transactions that will be used for the game.
         [Header("Scripts and Transactions")]
-        [SerializeField] TextAsset loginTxn;
-        [SerializeField] TextAsset getCurrentGameStateTxn;
-        [SerializeField] TextAsset checkWordScript;
-        [SerializeField] TextAsset submitGuessTxn;
+        [SerializeField] CadenceTransactionAsset loginTxn;
+        [SerializeField] CadenceTransactionAsset getCurrentGameStateTxn;
+        [SerializeField] CadenceScriptAsset checkWordScript;
+        [SerializeField] CadenceTransactionAsset submitGuessTxn;
 
         // Cadence scripts to get the data needed to display the High Scores panel
         [Header("Highscore Scripts")]
-        [SerializeField] TextAsset GetHighScores;
-        [SerializeField] TextAsset GetPlayerCumulativeScore;
-        [SerializeField] TextAsset GetPlayerWinningStreak;
-        [SerializeField] TextAsset GetPlayerMaxWinningStreak;
-        [SerializeField] TextAsset GetGuessDistribution;
+        [SerializeField] CadenceScriptAsset GetHighScores;
+        [SerializeField] CadenceScriptAsset GetPlayerCumulativeScore;
+        [SerializeField] CadenceScriptAsset GetPlayerWinningStreak;
+        [SerializeField] CadenceScriptAsset GetPlayerMaxWinningStreak;
+        [SerializeField] CadenceScriptAsset GetGuessDistribution;
+
+        // FlowControl Account object, used to help with text replacements in scripts and transactions
+        //private FlowControl.Account FLOW_ACCOUNT = null;
 
         private static FlowInterface m_instance = null;
         public static FlowInterface Instance
@@ -74,7 +102,7 @@ namespace FlowWordsTutorial
         /// <returns></returns>
         private IEnumerator OnAuthSuccess(string username, string flowAddress, System.Action<string, string> onSuccessCallback, System.Action onFailureCallback)
         {
-            // get flow account from address
+            // get FLOW account - we are only going to use this for text replacements
 
             // execute log in transaction on chain
 
@@ -97,7 +125,7 @@ namespace FlowWordsTutorial
         /// </summary>
         /// <param name="onSuccessCallback">Callback on success</param>
         /// <param name="onFailureCallback">Callback on failure</param>
-        public IEnumerator GetGameDataFromChain(System.Action<double, List<GuessResult>, Dictionary<string, string>> onSuccessCallback, System.Action onFailureCallback)
+        public IEnumerator GetGameDataFromChain(System.Action<Decimal, List<GuessResult>, Dictionary<string, string>> onSuccessCallback, System.Action onFailureCallback)
         {
             // execute getCurrentGameState transaction on chain
 
@@ -139,8 +167,10 @@ namespace FlowWordsTutorial
         /// </summary>
         /// <param name="onSuccessCallback">Callback on success</param>
         /// <param name="onFailureCallback">Callback on failure</param>
-        public IEnumerator LoadHighScoresFromChain(System.Action<List<ScoreStruct>, uint, uint, uint, uint[]> onSuccessCallback, System.Action onFailureCallback)
+        public IEnumerator LoadHighScoresFromChain(System.Action<List<ScoreStruct>, BigInteger, BigInteger, BigInteger, List<BigInteger>> onSuccessCallback, System.Action onFailureCallback)
         {
+            // get player's wallet public address
+
             // execute scripts to get highscore data
 
             // wait for completion
